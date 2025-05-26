@@ -42,7 +42,7 @@ async def query_llm(request: QueryRequest, x_api_key: str = Header(...)):
 
     try:
         logger.info(f"Pregunta recibida: {question}")
-        response = chain.invoke(question)
+        response = await chain.ainvoke(question)
         set_cached_answer(question, response)
         return {"question": question, "answer": response}
     except Exception as e:
