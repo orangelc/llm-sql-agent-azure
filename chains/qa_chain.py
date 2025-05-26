@@ -3,12 +3,12 @@ from dotenv import load_dotenv
 from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_community.agent_toolkits.sql.base import create_sql_agent
 from langchain_openai import ChatOpenAI
-from utils.timer import timeit
+from utils.timer import async_timeit
 
 
 load_dotenv()
 
-@timeit
+@async_timeit
 def build_sql_chain(config):
     
     db_uri = (
