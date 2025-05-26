@@ -6,12 +6,13 @@ from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
-def build_sql_chain():
+def build_sql_chain(config):
+    
     db_uri = (
-        f"mysql+mysqlconnector://{os.getenv('MYSQL_USER')}:"
-        f"{os.getenv('MYSQL_PASSWORD')}@{os.getenv('MYSQL_HOST')}:"
-        f"{os.getenv('MYSQL_PORT')}/{os.getenv('MYSQL_DATABASE')}"
-    )
+            f"postgresql+psycopg2://{config["POSTGRES_USER"]}:"
+            f"{config["POSTGRES_PASSWORD"]}@{config["POSTGRES_HOST"]}:"
+            f"{config["POSTGRES_PORT"]}/{config["POSTGRES_DB"]}"
+        )
 
     db = SQLDatabase.from_uri(
         db_uri,
