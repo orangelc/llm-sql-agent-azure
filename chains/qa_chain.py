@@ -9,9 +9,9 @@ load_dotenv()
 def build_sql_chain(config):
     
     db_uri = (
-            f"postgresql+psycopg2://{config["POSTGRES_USER"]}:"
-            f"{config["POSTGRES_PASSWORD"]}@{config["POSTGRES_HOST"]}:"
-            f"{config["POSTGRES_PORT"]}/{config["POSTGRES_DB"]}"
+            f'postgresql+psycopg2://{config["POSTGRES_USER"]}:'
+            f'{config["POSTGRES_PASSWORD"]}@{config["POSTGRES_HOST"]}:'
+            f'{config["POSTGRES_PORT"]}/{config["POSTGRES_DB"]}'
         )
 
     db = SQLDatabase.from_uri(
