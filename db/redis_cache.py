@@ -1,4 +1,3 @@
-import redis
 import hashlib
 from utils.timer import async_timeit
 import redis.asyncio as redis
