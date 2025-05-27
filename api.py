@@ -19,8 +19,6 @@ POSTGRES_CONFIG = {
         "POSTGRES_PORT": os.getenv("POSTGRES_PORT"),
     }
 
-chain = build_sql_chain(POSTGRES_CONFIG)
-
 API_KEY = "my-secret-key"  # mejor en .env
 
 class QueryRequest(BaseModel):
@@ -28,6 +26,9 @@ class QueryRequest(BaseModel):
 
 @app.post("/query")
 async def query_llm(request: QueryRequest, x_api_key: str = Header(...)):
+
+    chain = await build_sql_chain(POSTGRES_CONFIG)
+
     if x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="API key inválida")
 

@@ -9,10 +9,10 @@ from utils.timer import async_timeit
 load_dotenv()
 
 @async_timeit
-def build_sql_chain(config):
+async def build_sql_chain(config):
     
     db_uri = (
-            f'postgresql+asyncpg://{config["POSTGRES_USER"]}:'
+            f'postgresql+psycopg2://{config["POSTGRES_USER"]}:'
             f'{config["POSTGRES_PASSWORD"]}@{config["POSTGRES_HOST"]}:'
             f'{config["POSTGRES_PORT"]}/{config["POSTGRES_DB"]}'
         )
