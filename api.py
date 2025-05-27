@@ -35,7 +35,7 @@ async def query_llm(request: QueryRequest, x_api_key: str = Header(...)):
     if not question:
         raise HTTPException(status_code=400, detail="Pregunta vacía")
 
-    cached = get_cached_answer(question)
+    cached = await get_cached_answer(question)
     if cached:
         logger.info("Respuesta obtenida de cache")
         return {"question": question, "answer": cached.decode()}
@@ -43,7 +43,7 @@ async def query_llm(request: QueryRequest, x_api_key: str = Header(...)):
     try:
         logger.info(f"Pregunta recibida: {question}")
         response = await chain.ainvoke(question)
-        set_cached_answer(question, response)
+        await set_cached_answer(question, response)
         return {"question": question, "answer": response}
     except Exception as e:
         logger.error(f"Error al procesar la pregunta: {e}")
