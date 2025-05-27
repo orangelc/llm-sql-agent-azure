@@ -15,14 +15,14 @@ redis_client = redis.Redis(
 )
 
 @async_timeit
-def get_cache_key(question: str) -> str:
+async def get_cache_key(question: str) -> str:
     return "q:" + hashlib.md5(question.encode()).hexdigest()
 
 @async_timeit
-def get_cached_answer(question: str) -> str | None:
+async def get_cached_answer(question: str) -> str | None:
     return await r.get(get_cache_key(question))
 
 @async_timeit
-def set_cached_answer(question: str, answer: str):
+async def set_cached_answer(question: str, answer: str):
     await r.set(get_cache_key(question), answer, ex=3600)
 
