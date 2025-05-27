@@ -10,3 +10,4 @@ python-dotenv>=1.0.1
 pydantic
 httpx
 redis
+redis[asyncio]>=4.5.0
