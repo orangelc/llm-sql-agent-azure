@@ -20,9 +20,9 @@ async def get_cache_key(question: str) -> str:
 
 @async_timeit
 async def get_cached_answer(question: str) -> str | None:
-    return await r.get(get_cache_key(question))
+    return await redis_client.get(get_cache_key(question))
 
 @async_timeit
 async def set_cached_answer(question: str, answer: str):
-    await r.set(get_cache_key(question), answer, ex=3600)
+    await redis_client.set(get_cache_key(question), answer, ex=3600)
 
