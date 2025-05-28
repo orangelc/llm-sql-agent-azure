@@ -19,7 +19,6 @@ async def build_sql_chain(config):
 
     db = SQLDatabase.from_uri(
         db_uri,
-        include_tables=["vista_nomina_empleados","empleados"],
         view_support=True  # Esta línea permite incluir vistas
     )    
 

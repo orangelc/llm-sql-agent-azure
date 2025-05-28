@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException, Request, Header
 from pydantic import BaseModel
 from chains.qa_chain import build_sql_chain
-from db.redis_cache import get_cached_answer, set_cached_answer
 from config.logging import logger
 from dotenv import load_dotenv
 import os
@@ -33,18 +32,13 @@ async def query_llm(request: QueryRequest, x_api_key: str = Header(...)):
         raise HTTPException(status_code=401, detail="API key inválida")
 
     question = request.question.strip()
+
     if not question:
         raise HTTPException(status_code=400, detail="Pregunta vacía")
-
-    cached = await get_cached_answer(question)
-    if cached:
-        logger.info("Respuesta obtenida de cache")
-        return {"question": question, "answer": cached.decode()}
 
     try:
         logger.info(f"Pregunta recibida: {question}")
         response = await chain.ainvoke(question)
-        await set_cached_answer(question, response)
         return {"question": question, "answer": response}
     except Exception as e:
         logger.error(f"Error al procesar la pregunta: {e}")
